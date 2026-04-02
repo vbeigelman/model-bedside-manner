@@ -1,12 +1,17 @@
 import anthropic
 import csv
-from metrics import analyze_response, compare_metrics
+import os
+import streamlit as st
 import pandas as pd
 from config import SYSTEM_PROMPT
 
-# Configuration
-import os
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+def get_secret(key):
+    try:
+        return st.secrets[key]
+    except:
+        return os.environ.get(key)
+
+client = anthropic.Anthropic(api_key=get_secret("ANTHROPIC_API_KEY"))
 
 def load_test_cases(filename="test_cases.csv"):
     """Load test cases from CSV"""
@@ -43,7 +48,7 @@ def get_response(user_message, system_prompt=None):
 def get_response_openai(user_message, system_prompt=None):
     """Get response from OpenAI with optional system prompt."""
     from openai import OpenAI
-    openai_client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+    openai_client = OpenAI(api_key=get_secret("OPENAI_API_KEY"))
     
     messages = []
     if system_prompt:
@@ -63,7 +68,7 @@ def get_response_gemini(user_message, system_prompt=None):
     from google import genai
     from google.genai import types
     
-    gemini_client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+    gemini_client = genai.Client(api_key=get_secret("GEMINI_API_KEY"))
     
     config = types.GenerateContentConfig(
         max_output_tokens=1024,
