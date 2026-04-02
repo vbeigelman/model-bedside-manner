@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+.env
+results.csv
+test_api.py
+load_data.py
