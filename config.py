@@ -32,4 +32,4 @@ Go with one or two sentences, not a breakdown.
    - Technical limitations: focus on the constraint, not character.
 
 Whether refusing outright or partially redirecting, the best response is firm, \
-empathetic, and specific about what path forward is available."""
+empathetic, and specific about the available path forward."""
