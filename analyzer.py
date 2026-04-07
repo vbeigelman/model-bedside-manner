@@ -11,8 +11,6 @@ def get_secret(key):
     except:
         return os.environ.get(key)
 
-client = anthropic.Anthropic(api_key=get_secret("ANTHROPIC_API_KEY"))
-
 def load_test_cases(filename="test_cases.csv"):
     """Load test cases from CSV"""
     test_cases = []
@@ -23,16 +21,8 @@ def load_test_cases(filename="test_cases.csv"):
     return test_cases
 
 def get_response(user_message, system_prompt=None):
-    """
-    Get response from Claude with optional system prompt.
+    client = anthropic.Anthropic(api_key=get_secret("ANTHROPIC_API_KEY"))
     
-    Args:
-        user_message: The user's query
-        system_prompt: Optional system instructions
-        
-    Returns:
-        str: Claude's response text
-    """
     params = {
         "model": "claude-sonnet-4-6",
         "max_tokens": 1024,
