@@ -64,7 +64,7 @@ else:
     prompt_to_run = test_cases[selected_case]
 
 n_runs = st.slider("Number of runs per test case", min_value=1, max_value=10, value=5)
-st.caption("Each run makes 6 API calls (2 conditions × 3 models). 5 runs typically takes 5-6 minutes.")
+st.caption("*Each run makes 6 API calls (2 conditions × 3 models). 5 runs typically finish in 5-6 minutes.*")
 
 run_button = st.button("Run analysis", type="primary")
 
