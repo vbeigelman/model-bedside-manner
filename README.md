@@ -106,6 +106,7 @@ pip install anthropic openai google-genai streamlit
 ```
 
 **A note on Gemini's thinking tokens**
+
 Gemini 3 and 3.5 models have thinking enabled by default, and max_output_tokens acts as a combined budget for both thinking and visible output — not just output alone. Without capping thinking, responses can be truncated mid-sentence. analyzer.py sets thinking_level="low" and a higher max_output_tokens ceiling (2048) to leave enough room for complete responses given this tool's conversational, non-reasoning-heavy prompts.
 
 **Set API keys**
