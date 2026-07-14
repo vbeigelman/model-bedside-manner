@@ -1,6 +1,6 @@
 # Model Bedside Manner (MBM)
 
-A Python + Streamlit tool for comparing the way frontier AI models respond to sensitive prompts — with and without a behavior-shaping system prompt — across five behavioral dimensions.
+A Python + Streamlit tool for comparing the way frontier AI models respond to sensitive requests — with and without a behavior-shaping system prompt — across five behavioral dimensions.
 
 Built as a portfolio project to demonstrate applied model behavior evaluation: not just whether a model refuses, but *how* it behaves in the space between compliance and refusal.
 
