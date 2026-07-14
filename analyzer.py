@@ -4,6 +4,7 @@ import os
 import streamlit as st
 import pandas as pd
 from config import SYSTEM_PROMPT
+from metrics import analyze_response
 
 def get_secret(key):
     try:
@@ -24,7 +25,7 @@ def get_response(user_message, system_prompt=None):
     client = anthropic.Anthropic(api_key=get_secret("ANTHROPIC_API_KEY"))
     
     params = {
-        "model": "claude-sonnet-4-6",
+        "model": "claude-sonnet-5",
         "max_tokens": 1024,
         "messages": [{"role": "user", "content": user_message}]
     }
@@ -33,7 +34,13 @@ def get_response(user_message, system_prompt=None):
         params["system"] = system_prompt
     
     message = client.messages.create(**params)
-    return message.content[0].text
+    
+    # Sonnet 5 may include a ThinkingBlock before the text block
+    for block in message.content:
+        if block.type == "text":
+            return block.text
+    
+    return ""  # fallback if no text block found
 
 def get_response_openai(user_message, system_prompt=None):
     """Get response from OpenAI with optional system prompt."""
@@ -46,7 +53,7 @@ def get_response_openai(user_message, system_prompt=None):
     messages.append({"role": "user", "content": user_message})
     
     response = openai_client.chat.completions.create(
-        model="gpt-5.4",
+        model="gpt-5.5",
         max_completion_tokens=1024,
         messages=messages
     )
@@ -61,12 +68,13 @@ def get_response_gemini(user_message, system_prompt=None):
     gemini_client = genai.Client(api_key=get_secret("GEMINI_API_KEY"))
     
     config = types.GenerateContentConfig(
-        max_output_tokens=1024,
+        max_output_tokens=2048,
+        thinking_config=types.ThinkingConfig(thinking_level="low"),
         system_instruction=system_prompt if system_prompt else None
     )
     
     response = gemini_client.models.generate_content(
-        model="gemini-3-flash-preview",
+        model="gemini-3.5-flash",
         contents=user_message,
         config=config
     )
